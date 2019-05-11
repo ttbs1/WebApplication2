@@ -22,33 +22,39 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean(name = "fileUploadView")
 @ViewScoped
 public class FileUploadView {
-
-    private FileUploadView file;
+     
+    private UploadedFile file;
     private String x;
-    public FileUploadView getFile() {
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+    
+    
+ 
+    public UploadedFile getFile() {
         return file;
     }
  
     public void setFile(UploadedFile file) {
-        this.file = (FileUploadView) file;
+        this.file = file;
     }
      
     public void upload() {
         if(file != null) {
-            FacesMessage message = new FacesMessage("Succesful", file.getFile() + " is uploaded.");
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
      
-    public String handleFileUpload(FileUploadEvent event) throws FileNotFoundException, IOException {
+    public void handleFileUpload(FileUploadEvent event) throws IOException {
         FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        String x = new Scanner(event.getFile().getInputstream(),"UTF-8").useDelimiter("\\A").next();
-        return x;
-    }
-    
-    public FileUploadView() {
+        x = new Scanner(event.getFile().getInputstream(),"UTF-8").useDelimiter("\\A").next();
         
     }
-    
 }
